@@ -133,6 +133,9 @@
 
     $('#createBid').validate({
       rules: {
+        bid_category:{
+          required:true
+        },
         bid_type:{
           required:true
         },

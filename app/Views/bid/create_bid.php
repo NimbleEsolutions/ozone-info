@@ -1,5 +1,4 @@
-<?= view('home/dash_header'); 
-?>
+<?= view('home/dash_header'); ?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -37,6 +36,17 @@
 									<div class="col-sm-3">
 										<!-- text input -->
 										<div class="form-group">
+											<label>Category <span class="mandatory"> * </span></label>
+											<select class="form-control" name="bid_category">
+												<option value="">Please bid category</option>
+												<option value="Run Rate Bid">Run Rate Bid</option>
+												<option value="Closed">Closed</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<!-- text input -->
+										<div class="form-group">
 											<label>Type <span class="mandatory"> * </span></label>
 											<select class="form-control" name="bid_type">
 												<option value="">Please bid type</option>
@@ -57,15 +67,15 @@
 											<label>Bid End Date/Time <span class="mandatory"> * </span></label>
 											<input type="text" class="form-control datepicker" placeholder="select Date/Time" id="date1" name="bid_endDate">
 										</div>
-									</div>
+									</div>									
+								</div>
+								<div class="row">
 									<div class="col-sm-3">
 										<div class="form-group">
 											<label>Bid Opening Date/Time <span class="mandatory"> * </span></label>
 											<input type="text" class="form-control datepicker" placeholder="select Date/Time" id="date" name="bid_openDate">
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-sm-3">
 										<div class="form-group">
 											<label>Bid validity ( from End Date ) <span class="mandatory"> * </span></label>
@@ -96,6 +106,20 @@
 											</select>
 										</div>
 									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label>Client Contact <span class="mandatory"> * </span></label>
+											<input type="text" class="form-control" placeholder="please select client" name="bid_client_contact" readonly="">
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label>Client Email <span class="mandatory"> * </span></label>
+											<input type="text" class="form-control" placeholder="please select client" name="bid_client_email" readonly="">
+										</div>
+									</div>
 									<div class="col-sm-3">
 										<div class="form-group">
 											<label>Department <span class="mandatory"> * </span><span class="" data-toggle="modal" data-target="#newDepartment" data-id="" style="color:#007bff;font-weight: 400;cursor: pointer;">New Department ?</span>
@@ -106,6 +130,12 @@
 													<option value="<?= $dept['dept_id']; ?>"><?= $dept['dept_name']; ?></option>
 												<?php } ?>
 											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label>Department Contact Person<span class="mandatory"> * </span></label>
+											<input type="text" class="form-control" placeholder="please select department" name="bid_dept_contact" readonly="">
 										</div>
 									</div>									
 								</div>

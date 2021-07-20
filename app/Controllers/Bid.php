@@ -88,6 +88,7 @@ class Bid extends Controller
 			$bid_openDate = explode('/', $openDateTime[0]);
 			$bid_openTime = explode(':', $openDateTime[1]);
 			$bid = [
+				'bid_category'=>$this->request->getVar('bid_category'),
 				'bid_type'=>$this->request->getVar('bid_type'),
 				'bid_lead_ref'=>$this->request->getVar('bid_lead_ref'),
 				'bid_endDate'=>"".$bid_endDate[2]."-".$bid_endDate[1]."-".$bid_endDate[0]." ".$bid_endTime[0].":".$bid_endTime[1].":00",
@@ -311,6 +312,13 @@ class Bid extends Controller
 		echo json_encode($bid_data);
 	}
 
+	function getClientInfo()
+	{
+		$client = $_POST['client'];	
+		$client_data=(new HomeModel())->getData(array('client_id'=>$client),'sales_client');
+		echo json_encode($client_data);
+	}
+
 	function getBidProducts()
 	{	
 		$chkVal = $_POST['chkVal'];	
@@ -324,6 +332,14 @@ class Bid extends Controller
 		$dpData = (new HomeModel())->getData(array('dept_id'=>$chkVal),'sales_department');
 		echo json_encode($dpData);
 	}
+
+	function getDepartmentContactInfo()
+	{
+		$dept = $_POST['dept'];	
+		$dpData = (new HomeModel())->getData(array('cp_department'=>$dept,'cp_isDelete'=>0),'sales_contact_person');
+		echo json_encode($dpData);
+	}
+
 	function getEligibility()
 	{
 		$chkVal = $_POST['chkVal'];	

@@ -45,8 +45,8 @@
       var bid_id = $(e.relatedTarget).data('id');
       $(e.currentTarget).find('input[name="up_type_id"]').val(bid_id);
     });
-	
-	 $('#bidDetails').on('show.bs.modal', function(e) {
+
+    $('#bidDetails').on('show.bs.modal', function(e) {
       var bid = $(e.relatedTarget).data('id');
       var bid_data = bid.split("*"); //alert(bid);
       var bid_id = bid_data[0];
@@ -67,8 +67,8 @@
       },'json');
 
       $.post('<?= site_url('Sales/getRegionInfo') ?>',{chkVal:bid_region},function(clData){
-         $('.bid_region').html(clData[0].reg_name);
-      },'json');
+       $('.bid_region').html(clData[0].reg_name);
+     },'json');
       
       // $.post('<?= site_url('Sales/getClientInfo') ?>',{chkVal:lead_client},function(clData){
       //   $('.client_name').html(clData[0].client_name);
@@ -108,7 +108,7 @@
         }); 
       },'json');
 
-		$.post('<?= site_url('Bid/getBidProducts') ?>',{chkVal:bid_id},function(prData){
+      $.post('<?= site_url('Bid/getBidProducts') ?>',{chkVal:bid_id},function(prData){
         console.log(prData);
         $(".product_data").empty();
         var i = 1;
@@ -133,7 +133,7 @@
       }
     });
 
-     $("select[name='bid_epbg']").change(function(){
+    $("select[name='bid_epbg']").change(function(){
       var bid_epbg = $(this).val();
       if(bid_epbg == 'Yes'){
         $("#bid_epbg_val").removeClass().addClass('col-sm-3');
@@ -150,24 +150,24 @@
       rowCnt++;
       var old = $('#stock').html();
       var newrow = '<tr id="org">'+
-        '<td style="padding: 0;text-align: center;"><input type="checkbox"></td>'+
-        '<td  style="padding: 0;vertical-align: top;" id="item">'+
-          '<select class="form-control bidprod_product_id" name="bidprod_product_id['+arryRow+']" required>'+
-            '+<option value="">- Choose item -</option>'+
-            '<?php foreach($all_products as $key) {?>'+
-              '<option value="<?php echo $key['product_id'];?>"><?php echo $key['product_name'];?></option>'+
-            '<?php } ?>'+
-          '</select>'+
-        '</td>'+
-        '<td  style="padding: 0;vertical-align: top;" id="bidprod_qty">'+
-          '<input type="text" class="form-control bidprod_qty" name="bidprod_qty['+arryRow+']">'+
-        '</td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_spcification"><textarea  class="form-control bidprod_spcification" name="bidprod_spcification['+arryRow+']" rows="1"></textarea></td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_mm"><textarea rows="1" class="form-control bidprod_mm" name="bidprod_mm['+arryRow+']"></textarea></td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_budget"><input type="text" class="form-control bidprod_budget" name="bidprod_budget['+arryRow+']"></td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_gem"><input type="text" class="form-control bidprod_gem" name="bidprod_gem['+arryRow+']"></td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_tprice"><input type="text" class="form-control bidprod_tprice" name="bidprod_tprice['+arryRow+']"></td>'+
-        '<td style="padding: 0;vertical-align: top;" id="bidprod_qprice"><input type="text" class="form-control bidprod_qprice" name="bidprod_qprice['+arryRow+']"></td>'+
+      '<td style="padding: 0;text-align: center;"><input type="checkbox"></td>'+
+      '<td  style="padding: 0;vertical-align: top;" id="item">'+
+      '<select class="form-control bidprod_product_id" name="bidprod_product_id['+arryRow+']" required>'+
+      '+<option value="">- Choose item -</option>'+
+      '<?php foreach($all_products as $key) {?>'+
+      '<option value="<?php echo $key['product_id'];?>"><?php echo $key['product_name'];?></option>'+
+      '<?php } ?>'+
+      '</select>'+
+      '</td>'+
+      '<td  style="padding: 0;vertical-align: top;" id="bidprod_qty">'+
+      '<input type="text" class="form-control bidprod_qty" name="bidprod_qty['+arryRow+']">'+
+      '</td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_spcification"><textarea  class="form-control bidprod_spcification" name="bidprod_spcification['+arryRow+']" rows="1"></textarea></td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_mm"><textarea rows="1" class="form-control bidprod_mm" name="bidprod_mm['+arryRow+']"></textarea></td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_budget"><input type="text" class="form-control bidprod_budget" name="bidprod_budget['+arryRow+']"></td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_gem"><input type="text" class="form-control bidprod_gem" name="bidprod_gem['+arryRow+']"></td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_tprice"><input type="text" class="form-control bidprod_tprice" name="bidprod_tprice['+arryRow+']"></td>'+
+      '<td style="padding: 0;vertical-align: top;" id="bidprod_qprice"><input type="text" class="form-control bidprod_qprice" name="bidprod_qprice['+arryRow+']"></td>'+
       '</tr>'
       $('#stock').append(newrow);
       
@@ -196,6 +196,32 @@
       }
     });
 
+    $(document).on('change','select[name="bid_client"]', function(){
+      var bid_client = $(this).val();
+      $("input[name='bid_client_contact'],input[name='bid_client_email']").val('');
+      $.post("<?= site_url('Bid/getClientInfo'); ?>",{client:bid_client},function(data){
+        console.log(JSON.parse(data));
+        var client = JSON.parse(data);
+        if(client.length != 0){
+          $("input[name='bid_client_contact']").val(''+client[0].client_contact+'');
+          $("input[name='bid_client_email']").val(''+client[0].client_email+'');
+        }
+      });
+    });
+
+    $(document).on('change','select[name="bid_dept"]',function(){
+      var bid_dept = $(this).val();
+      console.log(bid_dept);
+      $("input[name='bid_dept_contact']").val('');
+      $.post("<?= site_url('Bid/getDepartmentContactInfo') ?>",{dept:bid_dept}, function(data){
+        console.log(JSON.parse(data));
+        var dept = JSON.parse(data);
+        if(dept.length != 0){
+          $("input[name='bid_dept_contact']").val(''+dept[0].cp_last_name+' '+dept[0].cp_first_name+' '+dept[0].cp_middle_name+'');
+        }
+      })
+    });
+
     $('#masterData').validate({
       rules: {
         dept_name:{
@@ -212,6 +238,9 @@
 
     $('#createBid').validate({
       rules: {
+        bid_category:{
+          required:true
+        },
         bid_type:{
           required:true
         },
@@ -255,7 +284,7 @@
     });
   });
 
-   function deleteRow(tbid) {
+function deleteRow(tbid) {
     //alert("Hiiii");
     try {
       var table = document.getElementById(tbid);
